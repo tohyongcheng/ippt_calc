@@ -1,301 +1,311 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="ipptCalculator">
-	<head>
-		<meta charset="utf-8">
+
+<head>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-	</head>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+</head>
 
-	<body ng-controller="ipptCtrl">
-		<div class="container">
-			<div class="page-header">
-					<h1>New IPPT Calculator <small>Optimize your scores</small> </h1>
-			</div>
+<body ng-controller="ipptCtrl">
+    <div class="container">
+        <div class="page-header">
+            <h1>New IPPT Calculator
+                <small>Optimize your scores</small>
+            </h1>
+        </div>
 
-			<ul class="nav nav-tabs" role="tablist" id="myTab">
-			  <li class="active"><a href="#calculator" role="tab" data-toggle="tab">Home</a></li>
-			  <li><a href="#info" role="tab" data-toggle="tab">More Info</a></li>
-			</ul>
+        <ul class="nav nav-tabs" role="tablist" id="myTab">
+            <li class="active"><a href="#calculator" role="tab" data-toggle="tab">Home</a>
+            </li>
+            <li><a href="#info" role="tab" data-toggle="tab">More Info</a>
+            </li>
+        </ul>
 
-			<div class="tab-content">
-			  <div class="tab-pane active" id="calculator">
-			  	<br>
-			  	<form class="form-horizontal" role="form">
-						<div class="form-group">
-					    <label for="age" class="col-sm-3 control-label">Age</label>
-					    <div class="col-sm-3">
-					      <input type="number" class="form-control" id="age" placeholder="Age" ng-model="age">
-					    </div>
-					  </div>
-					</form>
+        <div class="tab-content">
+            <div class="tab-pane active" id="calculator">
+                <br>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="age" class="col-sm-3 control-label">Age</label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" id="age" placeholder="Age" ng-model="age" ng-change="calculate()">
+                        </div>
+                    </div>
+                </form>
 
-					<form role="form" class="form-horizontal">
-						  <div class="form-group">
-						    <label class="col-sm-3 control-label" for="pushups">Push-Ups: </label>
-						    <div class="col-sm-3">
-							    <select class="form-control" id="pushups" placeholder="No. of Points (max 25)" ng-change="calculate()" ng-model="pushUpScore" ng-options="o as o for o in pushUpScoreOptions">
-							    </select>
-							    <span class="pull-right">points</span>
-							  </div>
+                <form role="form" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="pushups">Push-Ups:</label>
+                        <div class="col-sm-3">
+                            <select class="form-control" id="pushups" placeholder="No. of Points (max 25)" ng-change="calculate()" ng-model="pushUpScore" ng-options="o as o for o in pushUpScoreOptions">
+                            </select>
+                            <span class="pull-right">points</span>
+                        </div>
 
-							  <div class="col-sm-3">
-							    <input type="text" class="form-control" id="pushups" placeholder="No. of Reps" ng-model="pushUpReq">
-							    <span class="pull-right">reps</span>
-							  </div>
-						  </div>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="pushups" placeholder="No. of Reps" ng-model="pushUpReq">
+                            <span class="pull-right">reps</span>
+                        </div>
+                    </div>
 
-						  <div class="form-group">
-						    <label class="col-sm-3 control-label" for="situps">Sit-Ups: </label>
-						    <div class="col-sm-3">
-							    <select class="form-control" id="situps" ng-change="calculate()" ng-model="sitUpScore" ng-options="o as o for o in sitUpScoreOptions">
-							    </select>
-							    <span class="pull-right">points</span>
-							  </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="situps">Sit-Ups:</label>
+                        <div class="col-sm-3">
+                            <select class="form-control" id="situps" ng-change="calculate()" ng-model="sitUpScore" ng-options="o as o for o in sitUpScoreOptions">
+                            </select>
+                            <span class="pull-right">points</span>
+                        </div>
 
-							  <div class="col-sm-3">
-							    <input type="text" class="form-control" id="pushups" placeholder="No. of Reps" ng-model="sitUpReq">
-							    <span class="pull-right">reps</span>
-							  </div>
-						  </div>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="pushups" placeholder="No. of Reps" ng-model="sitUpReq">
+                            <span class="pull-right">reps</span>
+                        </div>
+                    </div>
 
-						  <div class="form-group">
-						    <label class="col-sm-3 control-label" for="pushups">2.4km Run Timing: </label>
-						    <div class="col-sm-3">
-							    <select class="form-control" id="running" ng-change="calculate()" ng-model="runningScore" ng-options="o as o for o in runningScoreOptions">
-							    </select>
-							    <span class="pull-right">points</span>
-							  </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="pushups">2.4km Run Timing:</label>
+                        <div class="col-sm-3">
+                            <select class="form-control" id="running" ng-change="calculate()" ng-model="runningScore" ng-options="o as o for o in runningScoreOptions">
+                            </select>
+                            <span class="pull-right">points</span>
+                        </div>
 
-							  <div class="col-sm-3">
-							    <input type="text" class="form-control" id="pushups" placeholder="Timing" ng-model="runningReq">
-							    <span class="pull-right">min</span>
-							  </div>
-						  </div>
-					</form>
-
-
-					<div class="jumbotron">
-						<h1 style="text-align:center">{{getAwardType()}}</h1>
-						<p style="text-align:center">{{totalScore}} points</p>
-					</div>
-			  </div>
-
-			  <div class="tab-pane" id="info">
-			  	<br>
-			  	<div class="panel panel-info">
-						<div class="panel-heading">
-					    <h3 class="panel-title">New IPPT Format</h3>
-					  </div>
-					  <div class="panel-body">
-							<div class="col-sm-6 col-sm-offset-3">
-								<table class="table">
-								  <thead>
-								  	<tr>
-									  	<th>Basic Fitness Component</td>
-									  	<th>3-Station IPPT</td>
-									  	<th>Maximum Points</td>
-									  </tr>
-								  </thead>
-								  <tbody>
-								  	<tr>
-								  		<td>Upper body strength</td>
-								  		<td>1-min Push Up</td>
-								  		<td>25</td>
-								  	</tr>
-								  	<tr>
-								  		<td>Abdominal or Core strength</td>
-								  		<td>1-min Sit Up</td>
-								  		<td>25</td>
-								  	</tr>
-								  	<tr>
-								  		<td>Cardiovascular fitness; <br>Lower body strength and endurance</td>
-								  		<td>2.4km Run</td>
-								  		<td>50</td>
-								  	</tr>
-								  </tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-					
-					<div class="panel panel-info">
-						<div class="panel-heading">
-					    <h3 class="panel-title">New IPPT Standards</h3>
-					  </div>
-					  <div class="panel-body">
-					   	<div class="col-sm-6 col-sm-offset-3">
-								<table class="table">
-								  <thead>
-								  	<tr>
-									  	<th>Award Type</td>
-									  	<th>Total Points Required</td>
-									  </tr>
-								  </thead>
-								  <tbody>
-								  	<tr>
-								  		<td>Pass (NSmen)</td>
-								  		<td>>50</td>
-								  	</tr>
-								  	<tr>
-								  		<td>
-								  			Pass with Incentive (NSmen)
-												<br>Pass (Active)
-								  		</td>
-								  		<td>>60</td>
-								  	</tr>
-								  	<tr>
-								  		<td>Silver</td>
-								  		<td>>70</td>
-								  	</tr>
-
-								  	<tr>
-								  		<td>Gold</td>
-								  		<td>>80</td>
-								  	</tr>
-								  	<tr>
-								  		<td>Gold (Commando/Diver/Guards)</td>
-								  		<td>≥85</td>
-								  	</tr>
-								  </tbody>
-								</table>
-							</div>
-					  </div>
-					</div>
-
-					<div class="panel panel-info">
-						<div class="panel-heading">
-					    <h3 class="panel-title">References</h3>
-					  </div>
-					  <div class="panel-body">
-					   	<div class="col-sm-6 col-sm-offset-3">
-					   		<ul>
-					   			<li><a href="http://www.mindef.gov.sg/imindef/press_room/official_releases/nr/2014/jul/24jul14_nr.html">Mindef: New IPPT Format and Scoring System </a></li>
-
-					   			<li><a href="http://www.mindef.gov.sg/imindef/press_room/official_releases/nr/2014/jul/24jul14_nr/24jul14_table.html#.U9QBCICSxZ9">Mindef: New IPPT Format and Scoring System: Push Up Scoring Table </a></li>
-
-					   			<li><a href="http://www.mindef.gov.sg/imindef/press_room/official_releases/nr/2014/jul/24jul14_nr/24jul14_table1.html#.U9PqbICSxZ8">Mindef: New IPPT Format and Scoring System: Sit Up Scoring Table  </a></li>
-
-					   			<li><a href="http://www.mindef.gov.sg/imindef/press_room/official_releases/nr/2014/jul/24jul14_nr/24jul14_table2.html#.U9PqbYCSxZ8">Mindef: New IPPT Format and Scoring System: 2.4km Run Scoring Table </a></li>
-					   		</ul>
-							</div>
-					  </div>
-					</div>
-			  
-					
-			  </div>
-			</div>
-
-			<hr>
-	    <div class="footer">
-	    	<div class="container">
-	         <p class="text-muted credit">A simple and quick hack by <a href="http://www.github.com/tohyongcheng" target="_blank">Toh Yong Cheng</a>. Built with AngularJS and Bootstrap.</p>
-	      </div>
-	    </div>
-
-		</div>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="pushups" placeholder="Timing" ng-model="runningReq">
+                            <span class="pull-right">min</span>
+                        </div>
+                    </div>
+                </form>
 
 
-		
-		
+                <div class="jumbotron">
+                    <h1 style="text-align:center">{{getAwardType()}}</h1>
+                    <p style="text-align:center">{{totalScore}} points</p>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="info">
+                <br>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">New IPPT Format</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Basic Fitness Component</td>
+                                            <th>3-Station IPPT</td>
+                                                <th>Maximum Points</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Upper body strength</td>
+                                        <td>1-min Push Up</td>
+                                        <td>25</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Abdominal or Core strength</td>
+                                        <td>1-min Sit Up</td>
+                                        <td>25</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cardiovascular fitness;
+                                            <br>Lower body strength and endurance</td>
+                                        <td>2.4km Run</td>
+                                        <td>50</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">New IPPT Standards</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Award Type</td>
+                                            <th>Total Points Required</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Pass (NSmen)</td>
+                                        <td>>50</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Pass with Incentive (NSmen)
+                                            <br>Pass (Active)
+                                        </td>
+                                        <td>>60</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Silver</td>
+                                        <td>>70</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Gold</td>
+                                        <td>>80</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gold (Commando/Diver/Guards)</td>
+                                        <td>≥85</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">References</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <ul>
+                                <li><a href="http://www.mindef.gov.sg/imindef/press_room/official_releases/nr/2014/jul/24jul14_nr.html">Mindef: New IPPT Format and Scoring System </a>
+                                </li>
+
+                                <li><a href="http://www.mindef.gov.sg/imindef/press_room/official_releases/nr/2014/jul/24jul14_nr/24jul14_table.html#.U9QBCICSxZ9">Mindef: New IPPT Format and Scoring System: Push Up Scoring Table </a>
+                                </li>
+
+                                <li><a href="http://www.mindef.gov.sg/imindef/press_room/official_releases/nr/2014/jul/24jul14_nr/24jul14_table1.html#.U9PqbICSxZ8">Mindef: New IPPT Format and Scoring System: Sit Up Scoring Table  </a>
+                                </li>
+
+                                <li><a href="http://www.mindef.gov.sg/imindef/press_room/official_releases/nr/2014/jul/24jul14_nr/24jul14_table2.html#.U9PqbYCSxZ8">Mindef: New IPPT Format and Scoring System: 2.4km Run Scoring Table </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
 
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js"></script>
-		<script type="text/javascript" src="data/pushUpData.js"></script>	
-		<script type="text/javascript" src="data/sitUpData.js"></script>	
-		<script type="text/javascript" src="data/runningData.js"></script>	
-		<script>
-			//Fast way to get unique values from array
-			Array.prototype.getUnique = function(){
-			   var u = {}, a = [];
-			   for(var i = 0, l = this.length; i < l; ++i){
-			      if(u.hasOwnProperty(this[i])) {
-			         continue;
-			      }
-			      a.push(this[i]);
-			      u[this[i]] = 1;
-			   }
-			   return a;
-			}
-			var app = angular.module('ipptCalculator', []);
-			app.controller('ipptCtrl', function($scope, $log) { 
-				$scope.age = 18;
-				$scope.ageCat = 0;
-				$scope.runningScoreOptions = [];
-				$scope.sitUpScoreOptions = [];
-				$scope.pushUpScoreOptions = [];
-				$scope.pushUpScore = 14;
-				$scope.sitUpScore = 13;
-				$scope.runningScore = 25;
-				$scope.totalScore = 52;
+            </div>
+        </div>
 
-				$scope.getAwardType = function() {
-					var total = $scope.totalScore;
-					switch(true) {
-						case (total >= 85):
-							return "Gold (Commando/Diver/Guards)";
-						case (total > 80):
-							return "Gold";
-						case (total > 70):
-							return "Silver";
-						case (total > 60):
-							return "Pass with Incentive (NSmen)";
-						case (total > 50):
-							return "Pass (NSmen)";
-						case (total <= 50):
-							return "Fail :(";
-					}
-				}
+        <hr>
+        <div class="footer">
+            <div class="container">
+                <p class="text-muted credit">A simple and quick hack by <a href="http://www.github.com/tohyongcheng" target="_blank">Toh Yong Cheng</a>. Built with AngularJS and Bootstrap.</p>
+            </div>
+        </div>
 
-				$scope.calculate = function() {
-					getAgeCat();
-					getOptions();
-					$scope.pushUpReq = getPushUpReq();
-					$scope.sitUpReq = getSitUpReq();
-					$scope.runningReq = "≤ " + runningTimes[getRunningReq()];
-					getTotalScore();
-				}
+    </div>
 
-				getAgeCat = function() {
-					var age = $scope.age;
-					var cat = 0;
-					if (age > 22) {
-						cat++;
-						age -= 3;
-					}
-					$scope.ageCat = cat;
-					console.log("Age Category is: "+cat);
-				}
 
-				getOptions = function() {
-					$scope.runningScoreOptions = runningData[$scope.ageCat].getUnique();
-					$scope.sitUpScoreOptions = sitUpData[$scope.ageCat].getUnique();
-					$scope.pushUpScoreOptions = pushUpData[$scope.ageCat].getUnique();
-				}
 
-				getPushUpReq = function() {
-					return pushUpData[$scope.ageCat].indexOf($scope.pushUpScore);
-				}
 
-				getSitUpReq = function() {
-					return sitUpData[$scope.ageCat].indexOf($scope.sitUpScore);
-				}
 
-				getRunningReq = function() {
-					var a =runningData[$scope.ageCat].indexOf($scope.runningScore);
-					console.log("Running req idx: "+a );
-					return a;
-				}
 
-				getTotalScore = function() {
-					$scope.totalScore = $scope.pushUpScore + $scope.sitUpScore + $scope.runningScore;
-				}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js"></script>
+    <script type="text/javascript" src="data/pushUpData.js"></script>
+    <script type="text/javascript" src="data/sitUpData.js"></script>
+    <script type="text/javascript" src="data/runningData.js"></script>
+    <script>
+    //Fast way to get unique values from array
+    Array.prototype.getUnique = function() {
+        var u = {},
+            a = [];
+        for (var i = 0, l = this.length; i < l; ++i) {
+            if (u.hasOwnProperty(this[i])) {
+                continue;
+            }
+            a.push(this[i]);
+            u[this[i]] = 1;
+        }
+        return a;
+    }
+    var app = angular.module('ipptCalculator', []);
+    app.controller('ipptCtrl', function($scope, $log) {
+        $scope.age = 18;
+        $scope.ageCat = 0;
+        $scope.runningScoreOptions = [];
+        $scope.sitUpScoreOptions = [];
+        $scope.pushUpScoreOptions = [];
+        $scope.pushUpScore = 14;
+        $scope.sitUpScore = 13;
+        $scope.runningScore = 25;
+        $scope.totalScore = 52;
 
-				$scope.calculate();
+        $scope.getAwardType = function() {
+            var total = $scope.totalScore;
+            switch (true) {
+                case (total >= 85):
+                    return "Gold (Commando/Diver/Guards)";
+                case (total > 80):
+                    return "Gold";
+                case (total > 70):
+                    return "Silver";
+                case (total > 60):
+                    return "Pass with Incentive (NSmen)";
+                case (total > 50):
+                    return "Pass (NSmen)";
+                case (total <= 50):
+                    return "Fail :(";
+            }
+        }
 
-			});
-		</script>
-	</body>
+        $scope.calculate = function() {
+            getAgeCat();
+            getOptions();
+            $scope.pushUpReq = getPushUpReq();
+            $scope.sitUpReq = getSitUpReq();
+            $scope.runningReq = "≤ " + runningTimes[getRunningReq()];
+            getTotalScore();
+        }
+
+        getAgeCat = function() {
+            var age = $scope.age;
+            var cat = 0;
+            while (age >= 22) {
+                cat++;
+                age -= 3;
+            }
+            $scope.ageCat = cat;
+        }
+
+        getOptions = function() {
+            $scope.runningScoreOptions = runningData[$scope.ageCat].getUnique();
+            $scope.sitUpScoreOptions = sitUpData[$scope.ageCat].getUnique();
+            $scope.pushUpScoreOptions = pushUpData[$scope.ageCat].getUnique();
+        }
+
+        getPushUpReq = function() {
+            return 1+pushUpData[$scope.ageCat].indexOf($scope.pushUpScore);
+        }
+
+        getSitUpReq = function() {
+            return 1+sitUpData[$scope.ageCat].indexOf($scope.sitUpScore);
+        }
+
+        getRunningReq = function() {
+            var a = runningData[$scope.ageCat].indexOf($scope.runningScore);
+            return a;
+        }
+
+        getTotalScore = function() {
+            $scope.totalScore = $scope.pushUpScore + $scope.sitUpScore + $scope.runningScore;
+        }
+
+        $scope.calculate();
+
+    });
+    </script>
+</body>
+
 </html>
