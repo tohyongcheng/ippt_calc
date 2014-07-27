@@ -34,7 +34,7 @@
                     <div class="form-group">
                         <label for="age" class="col-sm-3 control-label">Age</label>
                         <div class="col-sm-3">
-                            <input type="number" class="form-control" id="age" placeholder="Age" ng-model="age" ng-change="calculate()">
+                            <input type="number" class="form-control" id="age" placeholder="Age" ng-model="age" ng-change="calculateFromScore()">
                         </div>
                     </div>
                 </form>
@@ -43,13 +43,13 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="pushups">Push-Ups:</label>
                         <div class="col-sm-3">
-                            <select class="form-control" id="pushups" placeholder="No. of Points (max 25)" ng-change="calculate()" ng-model="pushUpScore" ng-options="o as o for o in pushUpScoreOptions">
+                            <select class="form-control" id="pushups" placeholder="No. of Points (max 25)" ng-change="calculateFromScore()" ng-model="pushUpScore" ng-options="o as o for o in pushUpScoreOptions">
                             </select>
                             <span class="pull-right">points</span>
                         </div>
 
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" id="pushups" placeholder="No. of Reps" ng-model="pushUpReq">
+                            <input type="number" class="form-control" id="pushups" placeholder="No. of Reps" ng-model="pushUpReq" ng-change="calculateFromReq()">
                             <span class="pull-right">reps</span>
                         </div>
                     </div>
@@ -57,13 +57,13 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="situps">Sit-Ups:</label>
                         <div class="col-sm-3">
-                            <select class="form-control" id="situps" ng-change="calculate()" ng-model="sitUpScore" ng-options="o as o for o in sitUpScoreOptions">
+                            <select class="form-control" id="situps" ng-change="calculateFromScore()" ng-model="sitUpScore" ng-options="o as o for o in sitUpScoreOptions">
                             </select>
                             <span class="pull-right">points</span>
                         </div>
 
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" id="pushups" placeholder="No. of Reps" ng-model="sitUpReq">
+                            <input type="number" class="form-control" id="pushups" placeholder="No. of Reps" ng-model="sitUpReq" ng-change="calculateFromReq()">
                             <span class="pull-right">reps</span>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="pushups">2.4km Run Timing:</label>
                         <div class="col-sm-3">
-                            <select class="form-control" id="running" ng-change="calculate()" ng-model="runningScore" ng-options="o as o for o in runningScoreOptions">
+                            <select class="form-control" id="running" ng-change="calculateFromScore()" ng-model="runningScore" ng-options="o as o for o in runningScoreOptions">
                             </select>
                             <span class="pull-right">points</span>
                         </div>
@@ -203,7 +203,7 @@
         <hr>
         <div class="footer">
             <div class="container">
-                <p class="text-muted credit">A simple and quick hack by <a href="http://www.github.com/tohyongcheng" target="_blank">Toh Yong Cheng</a>. Built with AngularJS and Bootstrap.</p>
+                <p class="text-muted credit">A simple and quick hack by <a href="http://www.github.com/tohyongcheng" target="_blank">Toh Yong Cheng</a>. Built with AngularJS and Bootstrap. Open Source Code Available <a href="https://github.com/tohyongcheng/ippt_calc" target="_blank">here</a>.</p>
             </div>
         </div>
 
@@ -264,12 +264,20 @@
             }
         }
 
-        $scope.calculate = function() {
+        $scope.calculateFromScore = function() {
             getAgeCat();
             getOptions();
             $scope.pushUpReq = getPushUpReq();
             $scope.sitUpReq = getSitUpReq();
             $scope.runningReq = "≤ " + runningTimes[getRunningReq()];
+            getTotalScore();
+        }
+
+        $scope.calculateFromReq = function() {
+            getAgeCat();
+            getOptions();
+            getPushUpPointsFromReq();
+            getSitUpPointsFromReq();
             getTotalScore();
         }
 
@@ -289,6 +297,23 @@
             $scope.pushUpScoreOptions = pushUpData[$scope.ageCat].getUnique();
         }
 
+        getPushUpPointsFromReq = function() {
+            var req = $scope.pushUpReq;
+            var pts = 0; 
+            if (req > 60) pts = 25; 
+            else if (req > 1) { pts = pushUpData[$scope.ageCat][req-1]; } 
+            $scope.pushUpScore = pts;
+            
+        }
+
+        getSitUpPointsFromReq = function() {
+            var req = $scope.sitUpReq;
+            var pts = 0; 
+            if (req > 60) pts = 25; 
+            else if (req > 1) { pts = sitUpData[$scope.ageCat][req-1]; } 
+            $scope.sitUpScore = pts;
+        }
+
         getPushUpReq = function() {
             return 1+pushUpData[$scope.ageCat].indexOf($scope.pushUpScore);
         }
@@ -306,7 +331,7 @@
             $scope.totalScore = $scope.pushUpScore + $scope.sitUpScore + $scope.runningScore;
         }
 
-        $scope.calculate();
+        $scope.calculateFromScore();
 
     });
     </script>
